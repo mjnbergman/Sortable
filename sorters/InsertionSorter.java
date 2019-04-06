@@ -12,14 +12,17 @@ public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
 		super(inputs);
 		// TODO Auto-generated constructor stub
 	}
-	/*public InsertionSorter(ArrayList<T> inputs) {
+	public InsertionSorter() {
 		super();
+	}
+	
+	public void setData(ArrayList<T> inputs) {
 		this.inputs = new ArrayList<SimpleSortingInput<T>>();
 		for(int i = 0; i < this.inputs.size(); i++) {
 			this.inputs.add(inputs.get(i));
 		}
 	}
-*/
+
 	@Override
 	public boolean isSorted() {
 		for(int i = 1; i < this.inputs.size(); i++) {
