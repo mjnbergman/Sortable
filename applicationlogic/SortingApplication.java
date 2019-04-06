@@ -14,8 +14,8 @@ public class SortingApplication {
 	
 	public SortingApplication() {
 		this.g = new GUI();
-		Integer[] datatest = {2, 3, 4};
-		ArrayList<Integer> dataset = (ArrayList<Integer>)Arrays.asList(datatest);
+		Integer[] datatest = {4, 3, 2};
+		ArrayList<Integer> dataset = new ArrayList<Integer>(Arrays.asList(datatest));
 		InsertionSorter<Integer> is = new InsertionSorter<Integer>();
 		is.setData(dataset);
 		this.sm = new SortingManager(is);

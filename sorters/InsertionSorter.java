@@ -18,8 +18,8 @@ public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
 	
 	public void setData(ArrayList<T> inputs) {
 		this.inputs = new ArrayList<SimpleSortingInput<T>>();
-		for(int i = 0; i < this.inputs.size(); i++) {
-			this.inputs.add(inputs.get(i));
+		for(int i = 0; i < inputs.size(); i++) {
+			this.inputs.add(new SimpleSortingInput<T>(inputs.get(i)));
 		}
 	}
 
