@@ -29,5 +29,4 @@ public class SimpleSortingInput<T extends Comparable<T>> implements Sortable<T>{
 	public int compareTo(Sortable<T> o) {
 		return this.inputs.compareTo(o.getValue());
 	}
-
 }

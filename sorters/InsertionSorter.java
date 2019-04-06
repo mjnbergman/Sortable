@@ -24,6 +24,10 @@ public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
 			this.inputs.add(new SimpleSortingInput<T>(inputs.get(i)));
 		}
 	}
+	
+	public ArrayList<SimpleSortingInput<T>> getData(){
+		return this.inputs;
+	}
 
 	@Override
 	public boolean isSorted() {

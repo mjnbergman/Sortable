@@ -21,6 +21,9 @@ public class SortingApplication {
 		ArrayList<Integer> dataset = new ArrayList<Integer>(Arrays.asList(datatest));
 		InsertionSorter<Integer> is = new InsertionSorter<Integer>();
 		is.setData(dataset);
+		
+		g.setData(is.getData());
+		
 		this.sm = new SortingManager(is);
 		this.sm.executeAlgorithm();
 		this.running = true;

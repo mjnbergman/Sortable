@@ -1,6 +1,7 @@
 package com.gui;
 
 import com.applicationlogic.FileHandler;
+import com.sortingauxiliary.Sortable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -99,6 +100,10 @@ public class GUI {
 	}
 	public boolean hasData() {
 		return this.newData;
+	}
+	
+	public void setData(ArrayList<? extends Sortable> datapoints) {
+		this.vp.updateData(datapoints);
 	}
 
 }
