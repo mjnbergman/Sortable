@@ -39,6 +39,8 @@ public class SortingApplication {
 				this.sm = new SortingManager(is);
 				this.sm.executeAlgorithm();
 			}
+			this.g.setData(this.sm.getDataset());
+			this.g.repaint();
 		}
 	}
 	

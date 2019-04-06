@@ -14,9 +14,9 @@ public class VisualizationPanel extends JPanel{
 
 	private Dimension dimension;
 	private ArrayList<? extends Sortable> currentData;
-	private final int RECT_WIDTH = 100;
+	private final int RECT_WIDTH = 50;
 	private final int PADDING_Y = 0;
-	private final int PADDING_X = 50;
+	private final int PADDING_X = 0;
 	
 	private int maxValue;
 	
@@ -43,6 +43,7 @@ public class VisualizationPanel extends JPanel{
 			if(this.currentData.get(i).compareTo(maxVal) == 1) {
 				maxVal = this.currentData.get(i);
 				max = i;
+				System.out.println("Found a new max: " + max);
 			}
 		}
 		
@@ -53,8 +54,12 @@ public class VisualizationPanel extends JPanel{
 		g2d.setColor(Color.RED);
 		Sortable s = this.currentData.get(index);
 		int x = RECT_WIDTH * index + PADDING_X;
-		int y = PADDING_Y;
-		g2d.fillRect(x, y, RECT_WIDTH, dimension.height);
+		int y = this.dimension.height;
+		int blockHeight = (int)(dimension.height * s.getValue().floatValue()/this.currentData.get(maxValue).getValue().floatValue());
+		System.out.println("Drawing: " + s.getValue().floatValue() + " with max: " + this.currentData.get(maxValue).getValue().floatValue());
+		g2d.fillRect(x, y - blockHeight, RECT_WIDTH, blockHeight);
+		g2d.setColor(Color.BLACK);
+		g2d.drawRect(x, y - blockHeight, RECT_WIDTH, blockHeight);
 	}
 	
 	public void updateData(ArrayList<? extends Sortable> currentData) {

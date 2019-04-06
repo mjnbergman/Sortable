@@ -10,7 +10,7 @@ package com.sortingauxiliary;
  *
  * @param <T>
  */
-public interface Sortable<T extends Comparable<T>> extends Comparable<Sortable<T>> {
+public interface Sortable<T extends Number & Comparable<T>> extends Comparable<Sortable<T>> {
 	
 	public T getValue();
 	void setInputs(T inputs);

@@ -1,6 +1,9 @@
 package com.applicationlogic;
 
+import java.util.ArrayList;
+
 import com.sorters.*;
+import com.sortingauxiliary.Sortable;
 
 /**
  * 
@@ -31,6 +34,10 @@ public class SortingManager implements Runnable{
 			this.algo.sort();
 		}
 		System.out.println("Data set is sorted!");
+	}
+	
+	public ArrayList<Sortable> getDataset(){
+		return this.algo.getData();
 	}
 	
 	public void executeAlgorithm() {

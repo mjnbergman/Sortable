@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.sortingauxiliary.SimpleSortingInput;
 
-public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
+public class InsertionSorter<T extends Number & Comparable<T>> extends SortingAlgorithm{
 	
 	private int index;
 
@@ -24,7 +24,7 @@ public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
 			this.inputs.add(new SimpleSortingInput<T>(inputs.get(i)));
 		}
 	}
-	
+	@Override
 	public ArrayList<SimpleSortingInput<T>> getData(){
 		return this.inputs;
 	}
@@ -65,6 +65,12 @@ public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
 	public ArrayList<SimpleSortingInput<T>> sort() {
 		while(!this.sortStep()) {
 			printDataset();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		printDataset();
 		return this.inputs;

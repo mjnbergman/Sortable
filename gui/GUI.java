@@ -105,5 +105,9 @@ public class GUI {
 	public void setData(ArrayList<? extends Sortable> datapoints) {
 		this.vp.updateData(datapoints);
 	}
+	
+	public void repaint() {
+		this.vp.repaint();
+	}
 
 }
