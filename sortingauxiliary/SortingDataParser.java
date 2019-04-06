@@ -12,11 +12,11 @@ import java.util.ArrayList;
  */
 public class SortingDataParser {
 	
-	ArrayList<SimpleSortingInput<Integer>> parseStandardInput(ArrayList<String> input) {
+	public ArrayList<SimpleSortingInput<Integer>> parseStandardInput(ArrayList<String> input) {
 		ArrayList<SimpleSortingInput<Integer>> output = new ArrayList<SimpleSortingInput<Integer>>();
 		
 		for(String i : input) {
-			SimpleSortingInput<Integer> si = new SimpleSortingInput<Integer>(Integer.parseInt(i));
+			SimpleSortingInput<Integer> si = new SimpleSortingInput<Integer>(Integer.parseInt(i.trim()));
 			output.add(si);
 		}
 		

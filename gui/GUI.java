@@ -5,6 +5,7 @@ import com.applicationlogic.FileHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,6 +30,8 @@ public class GUI {
 	
 	private VisualizationPanel vp;
 	private FileHandler fw;
+	private boolean newData = false;
+	private ArrayList<String> curData;
 	
 	public GUI() {
 		this.fw = new FileHandler();
@@ -66,7 +69,9 @@ public class GUI {
 
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
 		            File file = fc.getSelectedFile();
-		            fw.openDataSet(file);
+		            curData = fw.openDataSet(file);
+		            newData = true;
+		            System.out.println("New data set!");
 		        } else {
 		            
 		        }
@@ -86,6 +91,14 @@ public class GUI {
 		vp.setPaneSize(jf.getContentPane().getSize());
 		
 		jf.repaint();
+	}
+	
+	public ArrayList<String> getData(){
+		this.newData = false;
+		return this.curData;
+	}
+	public boolean hasData() {
+		return this.newData;
 	}
 
 }

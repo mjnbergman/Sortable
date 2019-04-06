@@ -26,6 +26,6 @@ public abstract class SortingAlgorithm<T extends Comparable<T>> {
 	}
 	
 	public abstract boolean isSorted();
-	public abstract Sortable<T> sortStep();
+	public abstract boolean sortStep();
 	public abstract ArrayList<Sortable<T>> sort();
 }
