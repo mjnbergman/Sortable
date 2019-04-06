@@ -1,26 +1,29 @@
 package com.sorters;
 
 import com.sortingauxiliary.Sortable;
+
+import java.util.ArrayList;
+
 import com.sortingauxiliary.SimpleSortingInput;
 
 public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
 
-	public InsertionSorter(SimpleSortingInput<T>[] inputs) {
+	public InsertionSorter(ArrayList<SimpleSortingInput<T>> inputs) {
 		super(inputs);
 		// TODO Auto-generated constructor stub
 	}
-	public InsertionSorter(T[] inputs) {
+	/*public InsertionSorter(ArrayList<T> inputs) {
 		super();
-		this.inputs = new SimpleSortingInput[inputs.length];
-		for(int i = 0; i < this.inputs.length; i++) {
-			this.inputs[i] = new SimpleSortingInput(inputs[i]);
+		this.inputs = new ArrayList<SimpleSortingInput<T>>();
+		for(int i = 0; i < this.inputs.size(); i++) {
+			this.inputs.add(inputs.get(i));
 		}
 	}
-
+*/
 	@Override
 	public boolean isSorted() {
-		for(int i = 1; i < this.inputs.length; i++) {
-			if(this.inputs[i].compareTo(this.inputs[i - 1]) == -1) {
+		for(int i = 1; i < this.inputs.size(); i++) {
+			if(((SimpleSortingInput<T>)this.inputs.get(i)).compareTo((SimpleSortingInput<T>)this.inputs.get(i - 1)) == -1) {
 				return false;
 			}
 		}
@@ -34,7 +37,7 @@ public class InsertionSorter<T extends Comparable<T>> extends SortingAlgorithm{
 	}
 
 	@Override
-	public SimpleSortingInput<T>[] sort() {
+	public ArrayList<SimpleSortingInput<T>> sort() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,7 @@
 package com.sorters;
 
+import java.util.ArrayList;
+
 import com.sortingauxiliary.*;
 
 /**
@@ -13,17 +15,17 @@ import com.sortingauxiliary.*;
  */
 public abstract class SortingAlgorithm<T extends Comparable<T>> {
 	
-	protected Sortable<T>[] inputs;
+	protected ArrayList<Sortable<T>> inputs;
 	
 	public SortingAlgorithm() {
 		
 	}
 	
-	public SortingAlgorithm(Sortable<T>[] inputs) {
+	public SortingAlgorithm(ArrayList<Sortable<T>> inputs) {
 		this.inputs = inputs;
 	}
 	
 	public abstract boolean isSorted();
 	public abstract Sortable<T> sortStep();
-	public abstract Sortable<T>[] sort();
+	public abstract ArrayList<Sortable<T>> sort();
 }
