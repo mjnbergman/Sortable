@@ -62,18 +62,20 @@ public class InsertionSorter<T extends Number & Comparable<T>> extends SortingAl
 	}
 
 	@Override
-	public ArrayList<SimpleSortingInput<T>> sort() {
+	public ArrayList<ArrayList<SimpleSortingInput<T>>> sort() {
+		ArrayList<ArrayList<SimpleSortingInput<T>>> stepBuffer = new ArrayList<>();
 		while(!this.sortStep()) {
 			printDataset();
-			try {
+/*			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			} */
+			stepBuffer.add(new ArrayList<SimpleSortingInput<T>>(this.inputs));
 		}
 		printDataset();
-		return this.inputs;
+		return stepBuffer;
 	}
 	
 	public void printDataset() {

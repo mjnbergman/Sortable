@@ -31,16 +31,33 @@ public class SortingApplication {
 	}
 	
 	public void run() {
+		
+		int dataCounter = 0;
+		
 		while(running) {
 			if(this.g.hasData()){
 				System.out.println("Found data while running!");
 				ArrayList<SimpleSortingInput<Integer>> dataset = this.sdp.parseStandardInput(this.g.getData());
 				InsertionSorter<Integer> is = new InsertionSorter<Integer>(dataset);
 				this.sm = new SortingManager(is);
+				dataCounter = 0;
 				this.sm.executeAlgorithm();
 			}
-			this.g.setData(this.sm.getDataset());
+			if(!this.sm.isRunning()) {
+				ArrayList<ArrayList<Sortable>> steps = this.sm.getDataset();
+				if(dataCounter < steps.size()) {
+					this.g.setData(steps.get(dataCounter));
+					dataCounter++;
+					System.out.println("Increasing step: " + dataCounter);
+				}
+			}
 			this.g.repaint();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
