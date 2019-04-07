@@ -41,6 +41,7 @@ public class SortingApplication {
 				InsertionSorter<Integer> is = new InsertionSorter<Integer>(dataset);
 				this.sm = new SortingManager(is);
 				dataCounter = 0;
+				this.g.setDone(false);
 				this.sm.executeAlgorithm();
 			}
 			if(!this.sm.isRunning()) {
@@ -49,6 +50,8 @@ public class SortingApplication {
 					this.g.setData(steps.get(dataCounter));
 					dataCounter++;
 					System.out.println("Increasing step: " + dataCounter);
+				}else {
+					this.g.setDone(true);
 				}
 			}
 			this.g.repaint();
