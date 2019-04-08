@@ -35,7 +35,7 @@ public class SortingManager implements Runnable{
 	@Override
 	public void run() {
 		this.isRunning = true;
-		if(!this.algo.isSorted() && !this.t.isInterrupted()) {
+		while(!this.algo.isSorted() && !this.t.isInterrupted()) {
 			System.out.println("Dataset is not sorted yet!");
 			sortingProcess.add(this.algo.sortStep());
 		}
