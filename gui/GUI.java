@@ -1,17 +1,28 @@
 package com.gui;
 
 import com.applicationlogic.FileHandler;
+import com.applicationlogic.SortingApplication;
+import com.sortingauxiliary.Sortable;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.SpringLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -28,10 +39,17 @@ import javax.swing.JMenuItem;
  */
 public class GUI {
 	
+
 	private VisualizationPanel vp;
 	private FileHandler fw;
 	private boolean newData = false;
 	private ArrayList<String> curData;
+	
+	private final int FRAME_WIDTH = 800;
+	
+	private final int SPEED_MIN = 0;
+	private final int SPEED_MAX = 5000;
+	private final int SPEED_INIT = 1000;
 	
 	public GUI() {
 		this.fw = new FileHandler();
@@ -44,9 +62,7 @@ public class GUI {
 	 */
 	private void constuctGUI() {
 		JFrame jf = new JFrame("The Sorting Visualization Machine");
-		vp = new VisualizationPanel();
-		
-		jf.add(vp);
+		jf.setSize(FRAME_WIDTH, 600);
 		
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -82,13 +98,74 @@ public class GUI {
 		
 		jf.setJMenuBar(menuBar);
 		
-		jf.setSize(800, 600);
+		JPanel topContainerPanel = new JPanel();
+		
+		SpringLayout masterLayout = new SpringLayout();
+		
+		topContainerPanel.setLayout(masterLayout);
+		
+		JPanel optionsPanel = new JPanel();
+		optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+		
+		JLabel sliderLabel = new JLabel("Step time in milliseconds: ");
+		
+		JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, SPEED_MIN, SPEED_MAX, SPEED_INIT);
+		
+		speedSlider.setMajorTickSpacing(2500);
+		speedSlider.setMinorTickSpacing(100);
+		speedSlider.setPaintTicks(true);
+		speedSlider.setPaintLabels(true);
+		
+		speedSlider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				int newTime = speedSlider.getValue();
+				SortingApplication.TIME_STEP = newTime;
+			}
+			
+		});
+		
+		optionsPanel.add(sliderLabel);
+		optionsPanel.add(speedSlider);
+		
+		optionsPanel.setPreferredSize(new Dimension((int)(0.24 * FRAME_WIDTH), 600));
+	
+		
+		
+		
+		vp = new VisualizationPanel();
+		
+		vp.setPreferredSize(new Dimension((int)(0.75 * FRAME_WIDTH), 600));
+		
+		topContainerPanel.add(vp);
+		
+		masterLayout.putConstraint(SpringLayout.WEST, vp, 0, SpringLayout.WEST, topContainerPanel);
+		masterLayout.putConstraint(SpringLayout.NORTH, vp, 0, SpringLayout.NORTH, topContainerPanel);
+		
+		
+		topContainerPanel.add(optionsPanel);
+	
+		
+		masterLayout.putConstraint(SpringLayout.WEST, optionsPanel, 0, SpringLayout.EAST, vp);
+		masterLayout.putConstraint(SpringLayout.NORTH, optionsPanel, 0, SpringLayout.NORTH, topContainerPanel);
+		
+		
+		topContainerPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 600));
+		
+		jf.getContentPane().add(topContainerPanel);
+		
+		
+		
+		
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setResizable(false);
 		
 		jf.setVisible(true);
 		
-		vp.setPaneSize(jf.getContentPane().getSize());
+		vp.setPaneSize(new Dimension((int)(jf.getContentPane().getSize().width * 0.75), jf.getContentPane().getSize().height));
+		
+		
 		
 		jf.repaint();
 	}
@@ -99,6 +176,18 @@ public class GUI {
 	}
 	public boolean hasData() {
 		return this.newData;
+	}
+	
+	public void setData(ArrayList<? extends Sortable> datapoints) {
+		this.vp.updateData(datapoints);
+	}
+	
+	public void repaint() {
+		this.vp.repaint();
+	}
+	
+	public void setDone(boolean done) {
+		this.vp.setDone(done);
 	}
 
 }

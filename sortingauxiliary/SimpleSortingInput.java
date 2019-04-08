@@ -10,7 +10,7 @@ package com.sortingauxiliary;
  *
  * @param <T>
  */
-public class SimpleSortingInput<T extends Comparable<T>> implements Sortable<T>{
+public class SimpleSortingInput<T extends Number & Comparable<T>> implements Sortable<T>{
 
 	private T inputs;
 	
@@ -27,7 +27,6 @@ public class SimpleSortingInput<T extends Comparable<T>> implements Sortable<T>{
 
 	@Override
 	public int compareTo(Sortable<T> o) {
-		return this.inputs.compareTo(o.getValue());
+		return (this.inputs).compareTo(o.getValue());
 	}
-
 }

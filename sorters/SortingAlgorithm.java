@@ -13,7 +13,7 @@ import com.sortingauxiliary.*;
  * It provides the basic method templates for interfacing with the GUI.
  *
  */
-public abstract class SortingAlgorithm<T extends Comparable<T>> {
+public abstract class SortingAlgorithm<T extends Number & Comparable<T>> {
 	
 	protected ArrayList<Sortable<T>> inputs;
 	
@@ -27,5 +27,6 @@ public abstract class SortingAlgorithm<T extends Comparable<T>> {
 	
 	public abstract boolean isSorted();
 	public abstract boolean sortStep();
-	public abstract ArrayList<Sortable<T>> sort();
+	public abstract ArrayList<ArrayList<Sortable<T>>> sort();
+	public abstract ArrayList<Sortable<T>> getData();
 }
