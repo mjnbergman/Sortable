@@ -7,6 +7,19 @@ import com.gui.*;
 import com.sorters.*;
 import com.sortingauxiliary.*;
 
+/**
+ * 
+ * @author Maiko Bergman
+ * @date 06-04-2019
+ * 
+ * The main execution point of the application. The main program loop is contained within this class.
+ * It manages the GUI, manages the execution of sorting algorithms through references to @code(SortingManager)
+ * objects which contain seperate threads of execution.
+ * 
+ * It continually pings the @code(GUI) for updates received from the user and applies them.
+ * This class also facilitates switching between sorting algorithms and datasets.
+ *
+ */
 public class SortingApplication {
 
 	private SortingManager sm;
@@ -32,6 +45,13 @@ public class SortingApplication {
 		this.run();
 	}
 	
+	/**
+	 * The main application loop, it continuously pings the gui for updates like new data or
+	 * a new sorting algorithm being selected by the user. It delegates these updates to the appropriate classes.
+	 * The main thread sleeps (so the @code(VisualizationPanel) halts drawing updates, but the GUI remains responsive).
+	 * The sleep delay is configurable by the user through an @code(JSlider) contained in the @code(GUI) class. 
+	 * This influences the static @code(TIME_STEP) variable.
+	 */
 	public void run() {
 		
 		int dataCounter = 0;

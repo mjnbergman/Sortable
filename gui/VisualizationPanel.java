@@ -10,6 +10,18 @@ import com.sortingauxiliary.*;
 
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Maiko Bergman
+ * @date 06-04-2019
+ * 
+ * The @code(VisualizationPanel) is a custom JPanel that the graphical representation of the dataset
+ * is drawn to. It is continuously repainted at an interval defined in the @code(SortingApplication).
+ * Furthermore, it receives new data through the @code(GUI) and will draw this to the screen, always
+ * filling its complete width with data rectangles, up to 3/4ths of its height.
+ * Automatically scales these data rectangles as well and performs all work related to the graphics.
+ *
+ */
 public class VisualizationPanel extends JPanel{
 
 	private Dimension dimension;
