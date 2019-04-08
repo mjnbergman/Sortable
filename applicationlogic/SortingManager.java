@@ -35,9 +35,9 @@ public class SortingManager implements Runnable{
 	@Override
 	public void run() {
 		this.isRunning = true;
-		if(!this.algo.isSorted()) {
+		if(!this.algo.isSorted() && !this.t.isInterrupted()) {
 			System.out.println("Dataset is not sorted yet!");
-			sortingProcess = this.algo.sort();
+			sortingProcess.add(this.algo.sortStep());
 		}
 		System.out.println("Data set is sorted!");
 		this.isRunning = false;
@@ -55,6 +55,10 @@ public class SortingManager implements Runnable{
 		if(this.t != null) {
 			this.t.start();
 		}
+	}
+	
+	public void stop() {
+		this.t.interrupt();
 	}
 
 }

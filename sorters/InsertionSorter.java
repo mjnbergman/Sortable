@@ -48,23 +48,20 @@ public class InsertionSorter<T extends Number & Comparable<T>> extends SortingAl
 	}
 
 	@Override
-	public boolean sortStep() {
+	public ArrayList<SimpleSortingInput<T>> sortStep() {
 		int j = this.index;
 		while(j > 0 && ((SimpleSortingInput<T>)(this.inputs.get(j - 1))).compareTo((SimpleSortingInput<T>)this.inputs.get(j)) == 1) {
 			this.swap(j, j - 1);
 			j--;
 		}
 		this.index++;
-		if(this.index >= this.inputs.size()) {
-			return true;
-		}
-		return false;
+		return new ArrayList<SimpleSortingInput<T>>(this.inputs);
 	}
 
 	@Override
 	public ArrayList<ArrayList<SimpleSortingInput<T>>> sort() {
 		ArrayList<ArrayList<SimpleSortingInput<T>>> stepBuffer = new ArrayList<>();
-		while(!this.sortStep()) {
+		while(!this.isSorted()) {
 			printDataset();
 /*			try {
 				Thread.sleep(500);
@@ -72,7 +69,7 @@ public class InsertionSorter<T extends Number & Comparable<T>> extends SortingAl
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} */
-			stepBuffer.add(new ArrayList<SimpleSortingInput<T>>(this.inputs));
+			stepBuffer.add(this.sortStep());
 		}
 		printDataset();
 		return stepBuffer;

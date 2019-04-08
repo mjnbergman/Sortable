@@ -56,6 +56,13 @@ public class SortingApplication {
 					this.g.setDone(true);
 				}
 			}
+			if(this.g.algorithmChanged()) {
+				if(this.sm.isRunning()) {
+					this.sm.stop();
+				}
+				String newAlgo = this.g.getCurrentAlgorithm();
+				this.g.validateChangeReceived();
+			}
 			this.g.repaint();
 			try {
 				Thread.sleep(SortingApplication.TIME_STEP);
