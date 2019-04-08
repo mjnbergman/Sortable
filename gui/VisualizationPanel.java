@@ -75,7 +75,8 @@ public class VisualizationPanel extends JPanel{
 	}
 	
 	public void setPaneSize(Dimension d) {
-		this.dimension = this.getSize();
+		this.setSize(d);
+		this.dimension = this.getSize();	
 	}
 	
 	public void setDone(boolean done) {

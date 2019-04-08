@@ -14,6 +14,8 @@ public class SortingApplication {
 	private GUI g;
 	private boolean running;
 	
+	public static int TIME_STEP = 1000;
+	
 	public SortingApplication() {
 		this.g = new GUI();
 		this.sdp = new SortingDataParser();
@@ -56,7 +58,7 @@ public class SortingApplication {
 			}
 			this.g.repaint();
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(SortingApplication.TIME_STEP);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

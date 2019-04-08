@@ -1,6 +1,7 @@
 package com.gui;
 
 import com.applicationlogic.FileHandler;
+import com.applicationlogic.SortingApplication;
 import com.sortingauxiliary.Sortable;
 
 import java.awt.Dimension;
@@ -13,12 +14,15 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SpringLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -103,21 +107,32 @@ public class GUI {
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 		
-		
+		JLabel sliderLabel = new JLabel("Step time in milliseconds: ");
 		
 		JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, SPEED_MIN, SPEED_MAX, SPEED_INIT);
 		
-		speedSlider.setMajorTickSpacing(500);
+		speedSlider.setMajorTickSpacing(2500);
 		speedSlider.setMinorTickSpacing(100);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
 		
+		speedSlider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				int newTime = speedSlider.getValue();
+				SortingApplication.TIME_STEP = newTime;
+			}
+			
+		});
+		
+		optionsPanel.add(sliderLabel);
 		optionsPanel.add(speedSlider);
 		
-		optionsPanel.setPreferredSize(new Dimension((int)(0.25 * FRAME_WIDTH), 600));
+		optionsPanel.setPreferredSize(new Dimension((int)(0.24 * FRAME_WIDTH), 600));
 	
 		
-		topContainerPanel.add(optionsPanel);
+		
 		
 		vp = new VisualizationPanel();
 		
@@ -129,15 +144,16 @@ public class GUI {
 		masterLayout.putConstraint(SpringLayout.NORTH, vp, 0, SpringLayout.NORTH, topContainerPanel);
 		
 		
-		
+		topContainerPanel.add(optionsPanel);
 	
 		
-		masterLayout.putConstraint(SpringLayout.WEST, optionsPanel, 5, SpringLayout.EAST, vp);
+		masterLayout.putConstraint(SpringLayout.WEST, optionsPanel, 0, SpringLayout.EAST, vp);
 		masterLayout.putConstraint(SpringLayout.NORTH, optionsPanel, 0, SpringLayout.NORTH, topContainerPanel);
+		
 		
 		topContainerPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 600));
 		
-		jf.add(topContainerPanel);
+		jf.getContentPane().add(topContainerPanel);
 		
 		
 		
@@ -147,7 +163,7 @@ public class GUI {
 		
 		jf.setVisible(true);
 		
-		vp.setPaneSize(jf.getContentPane().getSize());
+		vp.setPaneSize(new Dimension((int)(jf.getContentPane().getSize().width * 0.75), jf.getContentPane().getSize().height));
 		
 		
 		
