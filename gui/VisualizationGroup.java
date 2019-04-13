@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +34,8 @@ public class VisualizationGroup extends JPanel{
 	private VisualizationPanel vp;
 	private SpringLayout layout;
 	private JPanel optionsPanel;
+	private JSlider speedSlider;
+	private JButton restartButton;
 	
 	private String curAlgo;
 	private boolean algorithmChanged = false;
@@ -53,7 +56,7 @@ public class VisualizationGroup extends JPanel{
 		
 		JLabel sliderLabel = new JLabel("Step time in milliseconds: ");
 		
-		JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, GUI.SPEED_MIN, GUI.SPEED_MAX, GUI.SPEED_INIT);
+		this.speedSlider = new JSlider(JSlider.HORIZONTAL, GUI.SPEED_MIN, GUI.SPEED_MAX, GUI.SPEED_INIT);
 		
 		speedSlider.setMajorTickSpacing(2500);
 		speedSlider.setMinorTickSpacing(100);
@@ -103,12 +106,24 @@ public class VisualizationGroup extends JPanel{
 		
 		JLabel algoSelectLabel = new JLabel("Select a sorting algorithm: ");
 		
+		this.restartButton = new JButton("Restart");
+		
+		this.restartButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				resetVisualization();
+			}
+			
+		});
+		
 		this.optionsPanel.add(sliderLabel);
 		this.optionsPanel.add(speedSlider);
 		this.optionsPanel.add(algoSelectLabel);
 		this.optionsPanel.add(algoSelectBox);
+		this.optionsPanel.add(restartButton);
 		
-		this.optionsPanel.setPreferredSize(new Dimension((int)(0.24 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		this.optionsPanel.setPreferredSize(new Dimension((int)(0.25 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
 		
 		this.vp.setPreferredSize(new Dimension((int)(0.75 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
 		
@@ -129,16 +144,21 @@ public class VisualizationGroup extends JPanel{
 	}
 	
 	public void resize() {
-		this.optionsPanel.setPreferredSize(new Dimension((int)(0.9 * 0.24 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
-		this.vp.setPreferredSize(new Dimension((int)(0.9 * 0.75 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		this.optionsPanel.setPreferredSize(new Dimension((int)(0.95 * 0.25 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		this.vp.setPreferredSize(new Dimension((int)(0.95 * 0.75 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
 		//this.setPreferredSize(new Dimension(GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT, 600));
 		// this.revalidate();
 	}
 	
+	public void updateSliderValue() {
+		this.speedSlider.setValue(SortingApplication.TIME_STEP);
+	}
+	public void resetVisualization() {
+		this.vp.setNewAlgo(null, null);
+	}
 	public void attemptPlayback() {
 		this.vp.playback();
 	}
-	
 	public void setPaneSize(Dimension d) {
 		this.vp.setPaneSize(d);
 	}

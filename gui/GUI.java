@@ -57,7 +57,7 @@ public class GUI {
 	private JPanel mainPanel;
 	private JFrame jf;
 	
-	public static final int FRAME_WIDTH = 1100;
+	public static final int FRAME_WIDTH = 800;
 	
 	public static final int SPEED_MIN = 0;
 	public static final int SPEED_MAX = 5000;
@@ -245,8 +245,6 @@ public class GUI {
 		jf.setVisible(true);
 		
 		addPanel();
-		addPanel();
-		
 		
 		jf.repaint();
 	}
@@ -292,7 +290,7 @@ public class GUI {
 		mainPanel.add(vgfTemp);
 		
 		for(VisualizationGroup vgf : vgfs) {
-			vgf.setPreferredSize(new Dimension((int)(0.9f * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+			vgf.setPreferredSize(new Dimension((int)(0.95f * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
 		}
 		mainPanel.revalidate();
 		mainPanel.repaint();
@@ -300,7 +298,7 @@ public class GUI {
 		for(VisualizationGroup vgf : vgfs) {
 			
 			vgf.resize();
-			vgf.setPaneSize(new Dimension((int)((jf.getContentPane().getSize().width/GUI.PANEL_AMOUNT) * 0.9 * 0.75), jf.getContentPane().getSize().height));
+			vgf.setPaneSize(new Dimension((int)((jf.getContentPane().getSize().width/GUI.PANEL_AMOUNT) * 0.95 * 0.75), jf.getContentPane().getSize().height));
 		}
 		
 		mainPanel.validate();
@@ -315,6 +313,7 @@ public class GUI {
 		int counter = 0;
 		for(VisualizationGroup vf : vgfs) {
 			vf.repaint();
+			vf.updateSliderValue();
 			System.out.println(vf.getX() + " IS DE X COORD VAN: " + counter + " EN DE WIDTH IS: " + vf.getWidth());
 			counter++;
 		}
