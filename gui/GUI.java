@@ -54,11 +54,15 @@ public class GUI {
 	private ArrayList<String> curData;
 	private SortingDataParser sdp;
 	
+	private JPanel mainPanel;
+	private JFrame jf;
+	
 	public static final int FRAME_WIDTH = 1100;
 	
 	public static final int SPEED_MIN = 0;
 	public static final int SPEED_MAX = 5000;
 	public static final int SPEED_INIT = 1000;
+	public static int PANEL_AMOUNT = 0;
 	
 	public GUI() {
 		this.fw = new FileHandler();
@@ -72,20 +76,28 @@ public class GUI {
 	 * presents it to the user
 	 */
 	private void constuctGUI() {
-		JFrame jf = new JFrame("The Sorting Visualization Machine");
+		this.jf = new JFrame("The Sorting Visualization Machine");
 		jf.setSize(FRAME_WIDTH, 600);
 		
 		JMenuBar menuBar = new JMenuBar();
 		
 		JMenu fileMenu = new JMenu("File");
+		JMenu optionsMenu = new JMenu("Options");
 		
 		JMenuItem openFileMenuItem = new JMenuItem("Open Dataset");
 		JMenuItem exitAppMenuItem = new JMenuItem("Exit");
 		
+		JMenuItem extraWindowMenuItem = new JMenuItem("Add Extra Window");
+		
+		this.mainPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		
 		fileMenu.add(openFileMenuItem);
 		fileMenu.add(exitAppMenuItem);
 		
+		optionsMenu.add(extraWindowMenuItem);
+		
 		menuBar.add(fileMenu);
+		menuBar.add(optionsMenu);
 		
 		openFileMenuItem.addActionListener(new ActionListener() {
 
@@ -108,10 +120,16 @@ public class GUI {
 			
 		});
 		
-		jf.setJMenuBar(menuBar);
+		extraWindowMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				addPanel();
+			}
+			
+		});
 		
-		VisualizationGroup vgf = new VisualizationGroup();
-		vgf.buildGUI();
+		jf.setJMenuBar(menuBar);
 		
 	/*	JPanel topContainerPanel = new JPanel();
 		
@@ -211,9 +229,10 @@ public class GUI {
 		topContainerPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 600));
 		
 		*/
-		vgf.setPreferredSize(new Dimension(GUI.FRAME_WIDTH, 600));
-		this.vgfs.add(vgf);
-		jf.getContentPane().add(vgf);
+
+		
+		
+		jf.getContentPane().add(mainPanel);
 		
 		
 		
@@ -221,9 +240,11 @@ public class GUI {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setResizable(false);
 		
+		
+		
 		jf.setVisible(true);
 		
-		vgf.setPaneSize(new Dimension((int)(jf.getContentPane().getSize().width * 0.75), jf.getContentPane().getSize().height));
+		addPanel();
 		
 		
 		
@@ -258,6 +279,26 @@ public class GUI {
 			vgf.attemptPlayback();
 		}
 
+	}
+	
+	public void addPanel() {
+		System.out.println("Adding new panel...");
+		VisualizationGroup vgfTemp = new VisualizationGroup();
+		GUI.PANEL_AMOUNT++;
+		vgfTemp.buildGUI();
+		vgfs.add(vgfTemp);
+//		vgfTemp.setPreferredSize(new Dimension(GUI.FRAME_WIDTH/vgfs.size(), 600));
+		
+		mainPanel.add(vgfTemp);
+		
+		
+		for(VisualizationGroup vgf : vgfs) {
+			vgf.resize();
+			vgf.setPaneSize(new Dimension((int)((jf.getContentPane().getSize().width/vgfs.size()) * 0.75), jf.getContentPane().getSize().height));
+		}
+		
+		mainPanel.revalidate();
+		this.repaint();
 	}
 	
 	public void repaint() {

@@ -108,9 +108,9 @@ public class VisualizationGroup extends JPanel{
 		this.optionsPanel.add(algoSelectLabel);
 		this.optionsPanel.add(algoSelectBox);
 		
-		this.optionsPanel.setPreferredSize(new Dimension((int)(0.24 * GUI.FRAME_WIDTH), 600));
+		this.optionsPanel.setPreferredSize(new Dimension((int)(0.24 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
 		
-		this.vp.setPreferredSize(new Dimension((int)(0.75 * GUI.FRAME_WIDTH), 600));
+		this.vp.setPreferredSize(new Dimension((int)(0.75 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
 		
 		this.vp.setNewAlgo(curAlgo, null);
 		
@@ -126,6 +126,13 @@ public class VisualizationGroup extends JPanel{
 		this.layout.putConstraint(SpringLayout.WEST, optionsPanel, 0, SpringLayout.EAST, vp);
 		this.layout.putConstraint(SpringLayout.NORTH, optionsPanel, 0, SpringLayout.NORTH, this);
 		
+	}
+	
+	public void resize() {
+		this.optionsPanel.setPreferredSize(new Dimension((int)(0.24 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		this.vp.setPreferredSize(new Dimension((int)(0.75 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		this.setPreferredSize(new Dimension(GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT, 600));
+		this.revalidate();
 	}
 	
 	public void attemptPlayback() {
