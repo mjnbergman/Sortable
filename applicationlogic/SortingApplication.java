@@ -34,7 +34,7 @@ public class SortingApplication {
 		this.sdp = new SortingDataParser();
 		Integer[] datatest = {1, 3, 2, 7, 53, 2, 6, 91};
 		ArrayList<Integer> dataset = new ArrayList<Integer>(Arrays.asList(datatest));
-		InsertionSorter<Integer> is = new InsertionSorter<Integer>();
+		MergeSorter<Integer> is = new MergeSorter<Integer>();
 		is.setData(dataset);
 		
 		g.setData(is.getData());
