@@ -31,13 +31,32 @@ public class SortingManager implements Runnable{
 		this.sortingProcess = new ArrayList<>();
 		this.sortingProcess.add(new ArrayList<Sortable>(algo.getData()));
 	}
+	public SortingManager(String algoName, ArrayList<? extends Sortable> data) {
+		switch(algoName.toLowerCase()) {
+		case "insertionsort":
+			this.algo = new InsertionSorter(data);
+			System.out.println("Ready to sort with insertionsort!!!");
+			break;
+		case "mergesort":
+			this.algo = new MergeSorter(data);
+			break;
+		default:
+			this.algo = new InsertionSorter(data);
+			break;
+		}
+		
+		this.threadName = "SortingThread";
+		this.t = new Thread(this, this.threadName);
+		this.sortingProcess = new ArrayList<>();
+		this.sortingProcess.add(new ArrayList<Sortable>(algo.getData()));
+	}
 
 	@Override
 	public void run() {
 		this.isRunning = true;
-		if(!this.algo.isSorted()) {
+		while(!this.algo.isSorted() && !this.t.isInterrupted()) {
 			System.out.println("Dataset is not sorted yet!");
-			sortingProcess = this.algo.sort();
+			sortingProcess.add(this.algo.sortStep());
 		}
 		System.out.println("Data set is sorted!");
 		this.isRunning = false;
@@ -55,6 +74,10 @@ public class SortingManager implements Runnable{
 		if(this.t != null) {
 			this.t.start();
 		}
+	}
+	
+	public void stop() {
+		this.t.interrupt();
 	}
 
 }

@@ -3,7 +3,10 @@ package com.gui;
 import com.applicationlogic.FileHandler;
 import com.applicationlogic.SortingApplication;
 import com.sortingauxiliary.Sortable;
+import com.sortingauxiliary.SortingDataParser;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -12,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +25,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -40,19 +45,25 @@ import javax.swing.event.ChangeListener;
 public class GUI {
 	
 
-	private VisualizationPanel vp;
+	// private VisualizationPanel vp;
+	private ArrayList<VisualizationGroup> vgfs;
 	private FileHandler fw;
 	private boolean newData = false;
+	private boolean algorithmChanged = false;
+	private String curAlgo;
 	private ArrayList<String> curData;
+	private SortingDataParser sdp;
 	
-	private final int FRAME_WIDTH = 800;
+	public static final int FRAME_WIDTH = 1100;
 	
-	private final int SPEED_MIN = 0;
-	private final int SPEED_MAX = 5000;
-	private final int SPEED_INIT = 1000;
+	public static final int SPEED_MIN = 0;
+	public static final int SPEED_MAX = 5000;
+	public static final int SPEED_INIT = 1000;
 	
 	public GUI() {
 		this.fw = new FileHandler();
+		this.vgfs = new ArrayList<VisualizationGroup>();
+		this.sdp = new SortingDataParser();
 		this.constuctGUI();
 	}
 	
@@ -87,6 +98,7 @@ public class GUI {
 		            File file = fc.getSelectedFile();
 		            curData = fw.openDataSet(file);
 		            newData = true;
+		            setNewData(sdp.parseStandardInput(curData));
 		            System.out.println("New data set!");
 		        } else {
 		            
@@ -98,7 +110,10 @@ public class GUI {
 		
 		jf.setJMenuBar(menuBar);
 		
-		JPanel topContainerPanel = new JPanel();
+		VisualizationGroup vgf = new VisualizationGroup();
+		vgf.buildGUI();
+		
+	/*	JPanel topContainerPanel = new JPanel();
 		
 		SpringLayout masterLayout = new SpringLayout();
 		
@@ -108,6 +123,11 @@ public class GUI {
 		optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 		
 		JLabel sliderLabel = new JLabel("Step time in milliseconds: ");
+		
+	//	JPanel l1Panel = new JPanel(new BorderLayout(0, 0));
+		//l1Panel.add(sliderLabel, BorderLayout.CENTER);
+	//	sliderLabel.setHorizontalAlignment(SwingConstants.LEFT);
+	//	l1Panel.
 		
 		JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, SPEED_MIN, SPEED_MAX, SPEED_INIT);
 		
@@ -126,12 +146,49 @@ public class GUI {
 			
 		});
 		
+		String[] sortingAlgorithms = {"InsertionSort", "MergeSort"};
+		
+		JComboBox algoSelectBox = new JComboBox(sortingAlgorithms) {
+			
+            /** 
+             * @inherited <p>
+             *//*
+            @Override
+            public Dimension getMaximumSize() {
+                Dimension max = super.getMaximumSize();
+                max.height = getPreferredSize().height;
+                return max;
+            }
+		};
+		
+		algoSelectBox.setSelectedIndex(0);
+		curAlgo = sortingAlgorithms[0];
+		
+		algoSelectBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(!curAlgo.equals((String)algoSelectBox.getSelectedItem())) {
+					curAlgo = (String)algoSelectBox.getSelectedItem();
+					algorithmChanged = true;
+				}
+				
+			}
+			
+		});
+		
+		JLabel algoSelectLabel = new JLabel("Select a sorting algorithm: ");
+		
 		optionsPanel.add(sliderLabel);
 		optionsPanel.add(speedSlider);
+		optionsPanel.add(algoSelectLabel);
+		optionsPanel.add(algoSelectBox);
 		
 		optionsPanel.setPreferredSize(new Dimension((int)(0.24 * FRAME_WIDTH), 600));
-	
 		
+	//	algoSelectBox.setSize(new Dimension(100, 100));
+	
+	//	algoSelectBox.setMaximumSize(new Dimension(optionsPanel.getSize().width, 100));
 		
 		
 		vp = new VisualizationPanel();
@@ -153,7 +210,10 @@ public class GUI {
 		
 		topContainerPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 600));
 		
-		jf.getContentPane().add(topContainerPanel);
+		*/
+		vgf.setPreferredSize(new Dimension(GUI.FRAME_WIDTH, 600));
+		this.vgfs.add(vgf);
+		jf.getContentPane().add(vgf);
 		
 		
 		
@@ -163,7 +223,7 @@ public class GUI {
 		
 		jf.setVisible(true);
 		
-		vp.setPaneSize(new Dimension((int)(jf.getContentPane().getSize().width * 0.75), jf.getContentPane().getSize().height));
+		vgf.setPaneSize(new Dimension((int)(jf.getContentPane().getSize().width * 0.75), jf.getContentPane().getSize().height));
 		
 		
 		
@@ -174,20 +234,54 @@ public class GUI {
 		this.newData = false;
 		return this.curData;
 	}
+	
+	public void setNewData(ArrayList<? extends Sortable> datapoints) {
+		for(VisualizationGroup vf : vgfs) {
+			vf.setNewData(datapoints);
+		}
+		
+	}
+	
 	public boolean hasData() {
 		return this.newData;
 	}
 	
 	public void setData(ArrayList<? extends Sortable> datapoints) {
-		this.vp.updateData(datapoints);
+		for(VisualizationGroup vf : vgfs) {
+			vf.updateData(datapoints);
+		}
+		
+	}
+	
+	public void playbackAlgos() {
+		for(VisualizationGroup vgf : this.vgfs) {
+			vgf.attemptPlayback();
+		}
+
 	}
 	
 	public void repaint() {
-		this.vp.repaint();
+		for(VisualizationGroup vf : vgfs) {
+			vf.repaint();
+		}
 	}
 	
 	public void setDone(boolean done) {
-		this.vp.setDone(done);
+		for(VisualizationGroup vf : vgfs) {
+			vf.setDone(done);
+		}
+	}
+	
+	public boolean algorithmChanged() {
+		return this.algorithmChanged;
+	}
+	
+	public void validateChangeReceived() {
+		this.algorithmChanged = false;
+	}
+	
+	public String getCurrentAlgorithm() {
+		return this.curAlgo;
 	}
 
 }
