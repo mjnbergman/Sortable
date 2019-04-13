@@ -129,10 +129,10 @@ public class VisualizationGroup extends JPanel{
 	}
 	
 	public void resize() {
-		this.optionsPanel.setPreferredSize(new Dimension((int)(0.24 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
-		this.vp.setPreferredSize(new Dimension((int)(0.75 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
-		this.setPreferredSize(new Dimension(GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT, 600));
-		this.revalidate();
+		this.optionsPanel.setPreferredSize(new Dimension((int)(0.9 * 0.24 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		this.vp.setPreferredSize(new Dimension((int)(0.9 * 0.75 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		//this.setPreferredSize(new Dimension(GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT, 600));
+		// this.revalidate();
 	}
 	
 	public void attemptPlayback() {

@@ -50,6 +50,8 @@ public class VisualizationPanel extends JPanel{
 		g2d.setColor(Color.BLACK);
 		g2d.fillRect(0, 0, dimension.width, dimension.height);
 		
+		System.out.println("Filling one of the panels with x: " + this.getX() + " and width: " + dimension.width);
+		
 		for(int i = 0; i < currentData.size(); i++) {
 			drawVisualizationRectangle(g2d, i);
 		}
@@ -96,7 +98,7 @@ public class VisualizationPanel extends JPanel{
 	public void updateData(ArrayList<? extends Sortable> currentData) {
 		
 		if(currentData.size() == 0) {
-			System.out.println("What THA FAKKKK!!!");
+	//		System.out.println("What THA FAKKKK!!!");
 			return;
 		}
 		
@@ -120,7 +122,7 @@ public class VisualizationPanel extends JPanel{
 			return;
 		}
 		
-		System.out.println("Attempting playback at index: " + this.playbackIndex);
+	//	System.out.println("Attempting playback at index: " + this.playbackIndex);
 		
 		this.updateData(new ArrayList<>(this.sm.getDataset().get(this.playbackIndex)));
 		

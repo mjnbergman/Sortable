@@ -245,7 +245,7 @@ public class GUI {
 		jf.setVisible(true);
 		
 		addPanel();
-		
+		addPanel();
 		
 		
 		jf.repaint();
@@ -258,7 +258,7 @@ public class GUI {
 	
 	public void setNewData(ArrayList<? extends Sortable> datapoints) {
 		for(VisualizationGroup vf : vgfs) {
-			vf.setNewData(datapoints);
+			vf.setNewData(new ArrayList<Sortable>(datapoints));
 		}
 		
 	}
@@ -282,7 +282,7 @@ public class GUI {
 	}
 	
 	public void addPanel() {
-		System.out.println("Adding new panel...");
+		System.out.println("Adding new panel...\n" + "Number: " + this.vgfs.size());
 		VisualizationGroup vgfTemp = new VisualizationGroup();
 		GUI.PANEL_AMOUNT++;
 		vgfTemp.buildGUI();
@@ -291,20 +291,34 @@ public class GUI {
 		
 		mainPanel.add(vgfTemp);
 		
+		for(VisualizationGroup vgf : vgfs) {
+			vgf.setPreferredSize(new Dimension((int)(0.9f * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
+		}
+		mainPanel.revalidate();
+		mainPanel.repaint();
 		
 		for(VisualizationGroup vgf : vgfs) {
+			
 			vgf.resize();
-			vgf.setPaneSize(new Dimension((int)((jf.getContentPane().getSize().width/vgfs.size()) * 0.75), jf.getContentPane().getSize().height));
+			vgf.setPaneSize(new Dimension((int)((jf.getContentPane().getSize().width/GUI.PANEL_AMOUNT) * 0.9 * 0.75), jf.getContentPane().getSize().height));
 		}
 		
-		mainPanel.revalidate();
-		this.repaint();
+		mainPanel.validate();
+		mainPanel.repaint();
+		
+		
+	//	this.repaint();
+	//	jf.repaint();
 	}
 	
 	public void repaint() {
+		int counter = 0;
 		for(VisualizationGroup vf : vgfs) {
 			vf.repaint();
+			System.out.println(vf.getX() + " IS DE X COORD VAN: " + counter + " EN DE WIDTH IS: " + vf.getWidth());
+			counter++;
 		}
+		System.out.println("Drew: " + counter + "_________________________");
 	}
 	
 	public void setDone(boolean done) {
