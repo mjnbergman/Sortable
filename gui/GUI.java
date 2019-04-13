@@ -45,20 +45,22 @@ public class GUI {
 	
 
 	private VisualizationPanel vp;
+	private ArrayList<VisualizationGroup> vgfs;
 	private FileHandler fw;
 	private boolean newData = false;
 	private boolean algorithmChanged = false;
 	private String curAlgo;
 	private ArrayList<String> curData;
 	
-	private final int FRAME_WIDTH = 1100;
+	public static final int FRAME_WIDTH = 1100;
 	
-	private final int SPEED_MIN = 0;
-	private final int SPEED_MAX = 5000;
-	private final int SPEED_INIT = 1000;
+	public static final int SPEED_MIN = 0;
+	public static final int SPEED_MAX = 5000;
+	public static final int SPEED_INIT = 1000;
 	
 	public GUI() {
 		this.fw = new FileHandler();
+		this.vgfs = new ArrayList<VisualizationGroup>();
 		this.constuctGUI();
 	}
 	
@@ -104,7 +106,10 @@ public class GUI {
 		
 		jf.setJMenuBar(menuBar);
 		
-		JPanel topContainerPanel = new JPanel();
+		VisualizationGroup vgf = new VisualizationGroup();
+		vgf.buildGUI();
+		
+	/*	JPanel topContainerPanel = new JPanel();
 		
 		SpringLayout masterLayout = new SpringLayout();
 		
@@ -143,7 +148,7 @@ public class GUI {
 			
             /** 
              * @inherited <p>
-             */
+             *//*
             @Override
             public Dimension getMaximumSize() {
                 Dimension max = super.getMaximumSize();
@@ -201,7 +206,10 @@ public class GUI {
 		
 		topContainerPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 600));
 		
-		jf.getContentPane().add(topContainerPanel);
+		*/
+		vgf.setPreferredSize(new Dimension(GUI.FRAME_WIDTH, 600));
+		this.vgfs.add(vgf);
+		jf.getContentPane().add(vgf);
 		
 		
 		
@@ -211,7 +219,7 @@ public class GUI {
 		
 		jf.setVisible(true);
 		
-		vp.setPaneSize(new Dimension((int)(jf.getContentPane().getSize().width * 0.75), jf.getContentPane().getSize().height));
+		vgf.setPaneSize(new Dimension((int)(jf.getContentPane().getSize().width * 0.75), jf.getContentPane().getSize().height));
 		
 		
 		
@@ -227,15 +235,22 @@ public class GUI {
 	}
 	
 	public void setData(ArrayList<? extends Sortable> datapoints) {
-		this.vp.updateData(datapoints);
+		for(VisualizationGroup vf : vgfs) {
+			vf.updateData(datapoints);
+		}
+		
 	}
 	
 	public void repaint() {
-		this.vp.repaint();
+		for(VisualizationGroup vf : vgfs) {
+			vf.repaint();
+		}
 	}
 	
 	public void setDone(boolean done) {
-		this.vp.setDone(done);
+		for(VisualizationGroup vf : vgfs) {
+			vf.setDone(done);
+		}
 	}
 	
 	public boolean algorithmChanged() {
