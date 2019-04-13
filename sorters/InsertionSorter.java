@@ -55,6 +55,7 @@ public class InsertionSorter<T extends Number & Comparable<T>> extends SortingAl
 			j--;
 		}
 		this.index++;
+		this.printDataset();
 		return new ArrayList<SimpleSortingInput<T>>(this.inputs);
 	}
 

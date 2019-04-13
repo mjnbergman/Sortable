@@ -65,6 +65,10 @@ public class MergeSorter<T extends Number & Comparable<T>> extends SortingAlgori
 		return true;
 	}
 
+	/**
+	 * Own implementation of MergeSort. Semi in-place (only uses one auxiliary array, always the same size of the main array).
+	 * It's also stable, and does not rely on recursion.
+	 */
 	@Override
 	public ArrayList<SimpleSortingInput<T>> sortStep() {
 		
@@ -72,7 +76,7 @@ public class MergeSorter<T extends Number & Comparable<T>> extends SortingAlgori
 		
 		System.out.println("Looping with stepsize: " + this.stepSize);
 		
-		for(int i = 0; i < this.inputs.size(); i += this.stepSize) {
+		for(int i = 0; i + this.stepSize <= this.inputs.size(); i += this.stepSize) {
 			
 			int secondCounter = (int)(i + Math.ceil(this.stepSize/2));
 			System.out.println("De second counter is: " + secondCounter);

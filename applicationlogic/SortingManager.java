@@ -31,6 +31,25 @@ public class SortingManager implements Runnable{
 		this.sortingProcess = new ArrayList<>();
 		this.sortingProcess.add(new ArrayList<Sortable>(algo.getData()));
 	}
+	public SortingManager(String algoName, ArrayList<? extends Sortable> data) {
+		switch(algoName.toLowerCase()) {
+		case "insertionsort":
+			this.algo = new InsertionSorter(data);
+			System.out.println("Ready to sort with insertionsort!!!");
+			break;
+		case "mergesort":
+			this.algo = new MergeSorter(data);
+			break;
+		default:
+			this.algo = new InsertionSorter(data);
+			break;
+		}
+		
+		this.threadName = "SortingThread";
+		this.t = new Thread(this, this.threadName);
+		this.sortingProcess = new ArrayList<>();
+		this.sortingProcess.add(new ArrayList<Sortable>(algo.getData()));
+	}
 
 	@Override
 	public void run() {

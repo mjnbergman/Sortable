@@ -11,7 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SpringLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import com.applicationlogic.SortingApplication;
 import com.sortingauxiliary.Sortable;
 
 /**
@@ -55,7 +58,16 @@ public class VisualizationGroup extends JPanel{
 		speedSlider.setMajorTickSpacing(2500);
 		speedSlider.setMinorTickSpacing(100);
 		speedSlider.setPaintTicks(true);
-		speedSlider.setPaintLabels(true);
+		speedSlider.setPaintLabels(true);	
+		speedSlider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				int newTime = speedSlider.getValue();
+				SortingApplication.TIME_STEP = newTime;
+			}
+			
+		});
 		
 		String[] sortingAlgorithms = {"InsertionSort", "MergeSort"};
 		
@@ -82,6 +94,7 @@ public class VisualizationGroup extends JPanel{
 				if(!curAlgo.equals((String)algoSelectBox.getSelectedItem())) {
 					curAlgo = (String)algoSelectBox.getSelectedItem();
 					algorithmChanged = true;
+					vp.setNewAlgo(curAlgo, null);
 				}
 				
 			}
@@ -99,6 +112,8 @@ public class VisualizationGroup extends JPanel{
 		
 		this.vp.setPreferredSize(new Dimension((int)(0.75 * GUI.FRAME_WIDTH), 600));
 		
+		this.vp.setNewAlgo(curAlgo, null);
+		
 		this.add(vp);
 		
 		this.layout.putConstraint(SpringLayout.WEST, vp, 0, SpringLayout.WEST, this);
@@ -113,6 +128,10 @@ public class VisualizationGroup extends JPanel{
 		
 	}
 	
+	public void attemptPlayback() {
+		this.vp.playback();
+	}
+	
 	public void setPaneSize(Dimension d) {
 		this.vp.setPaneSize(d);
 	}
@@ -121,5 +140,8 @@ public class VisualizationGroup extends JPanel{
 	}
 	public void setDone(boolean done) {
 		this.vp.setDone(done);
+	}
+	public void setNewData(ArrayList<? extends Sortable> datapoints) {
+		this.vp.setNewAlgo(null, datapoints);
 	}
 }

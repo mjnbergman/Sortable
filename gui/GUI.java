@@ -3,6 +3,7 @@ package com.gui;
 import com.applicationlogic.FileHandler;
 import com.applicationlogic.SortingApplication;
 import com.sortingauxiliary.Sortable;
+import com.sortingauxiliary.SortingDataParser;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -44,13 +45,14 @@ import javax.swing.event.ChangeListener;
 public class GUI {
 	
 
-	private VisualizationPanel vp;
+	// private VisualizationPanel vp;
 	private ArrayList<VisualizationGroup> vgfs;
 	private FileHandler fw;
 	private boolean newData = false;
 	private boolean algorithmChanged = false;
 	private String curAlgo;
 	private ArrayList<String> curData;
+	private SortingDataParser sdp;
 	
 	public static final int FRAME_WIDTH = 1100;
 	
@@ -61,6 +63,7 @@ public class GUI {
 	public GUI() {
 		this.fw = new FileHandler();
 		this.vgfs = new ArrayList<VisualizationGroup>();
+		this.sdp = new SortingDataParser();
 		this.constuctGUI();
 	}
 	
@@ -95,6 +98,7 @@ public class GUI {
 		            File file = fc.getSelectedFile();
 		            curData = fw.openDataSet(file);
 		            newData = true;
+		            setNewData(sdp.parseStandardInput(curData));
 		            System.out.println("New data set!");
 		        } else {
 		            
@@ -230,6 +234,14 @@ public class GUI {
 		this.newData = false;
 		return this.curData;
 	}
+	
+	public void setNewData(ArrayList<? extends Sortable> datapoints) {
+		for(VisualizationGroup vf : vgfs) {
+			vf.setNewData(datapoints);
+		}
+		
+	}
+	
 	public boolean hasData() {
 		return this.newData;
 	}
@@ -239,6 +251,13 @@ public class GUI {
 			vf.updateData(datapoints);
 		}
 		
+	}
+	
+	public void playbackAlgos() {
+		for(VisualizationGroup vgf : this.vgfs) {
+			vgf.attemptPlayback();
+		}
+
 	}
 	
 	public void repaint() {
