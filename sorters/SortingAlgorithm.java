@@ -16,17 +16,20 @@ import com.sortingauxiliary.*;
 public abstract class SortingAlgorithm<T extends Number & Comparable<T>> {
 	
 	protected ArrayList<Sortable<T>> inputs;
+	protected ArrayList<ArrayList<Integer>> highlights;
 	
 	public SortingAlgorithm() {
-		
+		this.highlights = new ArrayList<>();
 	}
 	
 	public SortingAlgorithm(ArrayList<Sortable<T>> inputs) {
 		this.inputs = inputs;
+		this.highlights = new ArrayList<>();
 	}
 	
 	public abstract boolean isSorted();
 	public abstract ArrayList<Sortable<T>> sortStep();
 	public abstract ArrayList<ArrayList<Sortable<T>>> sort();
+	public abstract ArrayList<ArrayList<Integer>> getHighlights();
 	public abstract ArrayList<Sortable<T>> getData();
 }

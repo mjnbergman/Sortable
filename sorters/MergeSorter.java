@@ -156,5 +156,9 @@ public class MergeSorter<T extends Number & Comparable<T>> extends SortingAlgori
 	public ArrayList<SimpleSortingInput<T>> getData() {
 		return this.inputs;
 	}
+	@Override
+	public ArrayList<ArrayList<Integer>> getHighlights() {
+		return this.highlights;
+	}
 
 }

@@ -49,6 +49,10 @@ public class InsertionSorter<T extends Number & Comparable<T>> extends SortingAl
 
 	@Override
 	public ArrayList<SimpleSortingInput<T>> sortStep() {
+		ArrayList<Integer> insertionHighlights = new ArrayList<>();
+		insertionHighlights.add(index);
+		this.highlights.add(insertionHighlights);
+		
 		int j = this.index;
 		while(j > 0 && ((SimpleSortingInput<T>)(this.inputs.get(j - 1))).compareTo((SimpleSortingInput<T>)this.inputs.get(j)) == 1) {
 			this.swap(j, j - 1);
@@ -82,6 +86,10 @@ public class InsertionSorter<T extends Number & Comparable<T>> extends SortingAl
 			System.out.print(t.getValue() + ", ");
 		}
 		System.out.println("");
+	}
+	@Override
+	public ArrayList<ArrayList<Integer>> getHighlights() {
+		return this.highlights;
 	}
 
 }

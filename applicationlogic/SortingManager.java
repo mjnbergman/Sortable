@@ -22,6 +22,7 @@ public class SortingManager implements Runnable{
 	private String threadName;
 	private Thread t;
 	private ArrayList<ArrayList<Sortable>> sortingProcess;
+	private ArrayList<ArrayList<Integer>> sortingHighlights;
 	private boolean isRunning;
 	
 	public SortingManager(SortingAlgorithm algo) {
@@ -30,6 +31,7 @@ public class SortingManager implements Runnable{
 		this.t = new Thread(this, this.threadName);
 		this.sortingProcess = new ArrayList<>();
 		this.sortingProcess.add(new ArrayList<Sortable>(algo.getData()));
+		this.sortingHighlights = new ArrayList<>();
 	}
 	public SortingManager(String algoName, ArrayList<? extends Sortable> data) {
 		switch(algoName.toLowerCase()) {
@@ -49,6 +51,7 @@ public class SortingManager implements Runnable{
 		this.t = new Thread(this, this.threadName);
 		this.sortingProcess = new ArrayList<>();
 		this.sortingProcess.add(new ArrayList<Sortable>(algo.getData()));
+		this.sortingHighlights = new ArrayList<>();
 	}
 
 	@Override
@@ -59,11 +62,16 @@ public class SortingManager implements Runnable{
 			sortingProcess.add(this.algo.sortStep());
 		}
 		System.out.println("Data set is sorted!");
+		this.sortingHighlights = this.algo.getHighlights();
 		this.isRunning = false;
 	}
 	
 	public ArrayList<ArrayList<Sortable>> getDataset(){
 		return this.sortingProcess;
+	}
+	
+	public ArrayList<ArrayList<Integer>> getHighlights(){
+		return this.sortingHighlights;
 	}
 	
 	public boolean isRunning() {

@@ -27,6 +27,7 @@ public class VisualizationPanel extends JPanel{
 
 	private Dimension dimension;
 	private ArrayList<? extends Sortable> currentData;
+	private ArrayList<Integer> currentHighlights;
 	private ArrayList<? extends Sortable> originalDataset;
 	private int RECT_WIDTH = 50;
 	private final int PADDING_Y = 0;
@@ -43,6 +44,7 @@ public class VisualizationPanel extends JPanel{
 	
 	public VisualizationPanel() {
 		this.currentData = new ArrayList<>();
+		this.currentHighlights = new ArrayList<>();
 		this.originalDataset = new ArrayList<>();
 	}
 	
@@ -78,9 +80,19 @@ public class VisualizationPanel extends JPanel{
 		
 		return max;
 	}
+	private boolean isHighlighted(int indexToCheck) {
+		for(Integer i : this.currentHighlights) {
+			if(i.intValue() == indexToCheck) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	private void drawVisualizationRectangle(Graphics2D g2d, int index) {
-		if(!doneSorting) {
+		if(isHighlighted(index) && !doneSorting) {
+			g2d.setColor(Color.YELLOW);
+		}else if(!doneSorting){
 			g2d.setColor(Color.RED);
 		}else {
 			g2d.setColor(Color.GREEN);
@@ -134,6 +146,11 @@ public class VisualizationPanel extends JPanel{
 	//	System.out.println("Attempting playback at index: " + this.playbackIndex);
 		
 		this.updateData(new ArrayList<>(this.sm.getDataset().get(this.playbackIndex)));
+		
+		if(this.sm.getHighlights().size() != 0 && this.playbackIndex < this.sm.getHighlights().size()) {
+			this.currentHighlights = this.sm.getHighlights().get(this.playbackIndex);
+		}
+		
 		
 		if(this.playbackIndex + 1 < this.sm.getDataset().size()) {
 			this.playbackIndex++;
