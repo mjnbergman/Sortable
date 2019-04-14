@@ -33,6 +33,7 @@ public class VisualizationPanel extends JPanel{
 	private final int PADDING_X = 0;
 	private boolean doneSorting = false;
 	private String currentAlgo;
+	private boolean showLabels = true;
 	
 	private SortingManager sm;
 	
@@ -93,6 +94,14 @@ public class VisualizationPanel extends JPanel{
 		g2d.fillRect(x, y - blockHeight, RECT_WIDTH, blockHeight);
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(x, y - blockHeight, RECT_WIDTH, blockHeight);
+		
+		if(this.showLabels) {
+			g2d.setColor(Color.WHITE);
+			
+			int textWidth = g2d.getFontMetrics().stringWidth("" + this.currentData.get(index).getValue().floatValue());
+			
+			g2d.drawString("" + this.currentData.get(index).getValue().floatValue(), x + RECT_WIDTH/2 - textWidth/2, y - blockHeight - dimension.height * 0.1f);
+		}
 	}
 	
 	public void updateData(ArrayList<? extends Sortable> currentData) {
@@ -131,6 +140,10 @@ public class VisualizationPanel extends JPanel{
 		}else {
 			this.setDone(true);
 		}
+	}
+	
+	public void toggleShowLabels(boolean showLabels) {
+		this.showLabels = showLabels;
 	}
 
 	

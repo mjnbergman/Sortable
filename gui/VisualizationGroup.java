@@ -3,10 +3,13 @@ package com.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,6 +39,7 @@ public class VisualizationGroup extends JPanel{
 	private JPanel optionsPanel;
 	private JSlider speedSlider;
 	private JButton restartButton;
+	private boolean displayLabels = true;
 	
 	private String curAlgo;
 	private boolean algorithmChanged = false;
@@ -117,11 +121,29 @@ public class VisualizationGroup extends JPanel{
 			
 		});
 		
+		JCheckBox labelsCheckBox = new JCheckBox("Display Values");
+		labelsCheckBox.setSelected(true);
+		
+		labelsCheckBox.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED) {
+					vp.toggleShowLabels(true);
+				}else if(arg0.getStateChange() == ItemEvent.DESELECTED) {
+					vp.toggleShowLabels(false);
+				}
+				
+			}
+			
+		});
+		
 		this.optionsPanel.add(sliderLabel);
 		this.optionsPanel.add(speedSlider);
 		this.optionsPanel.add(algoSelectLabel);
 		this.optionsPanel.add(algoSelectBox);
 		this.optionsPanel.add(restartButton);
+		this.optionsPanel.add(labelsCheckBox);
 		
 		this.optionsPanel.setPreferredSize(new Dimension((int)(0.25 * (GUI.FRAME_WIDTH/GUI.PANEL_AMOUNT)), 600));
 		
