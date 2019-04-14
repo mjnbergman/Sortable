@@ -89,7 +89,7 @@ public class GUI {
 		
 		JMenuItem extraWindowMenuItem = new JMenuItem("Add Extra Window");
 		
-		this.mainPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		this.mainPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
 		
 		fileMenu.add(openFileMenuItem);
 		fileMenu.add(exitAppMenuItem);
@@ -118,6 +118,13 @@ public class GUI {
 				
 			}
 			
+		});
+		
+		exitAppMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
 		});
 		
 		extraWindowMenuItem.addActionListener(new ActionListener() {
