@@ -17,4 +17,7 @@ Right now implemented features are:
 
 More features will come in the near future
 
+![During sorting](/Screen1.png?raw=true "During sorting")
+![After sorting](/Screen2.png?raw=true "After sorting")
+
 &copy; Maiko Bergman, 2019
